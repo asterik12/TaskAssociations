@@ -1,0 +1,16 @@
+package com.TaskAssociationsBackend.TaskAssociationsBackend.Repository;
+
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.TaskAssociationsBackend.TaskAssociationsBackend.Models.ERole;
+import com.TaskAssociationsBackend.TaskAssociationsBackend.Models.Role;
+
+@Repository
+public interface RoleRepository extends JpaRepository<Role, Long>{
+
+	Optional<Role> findByName(ERole name);
+	
+}
