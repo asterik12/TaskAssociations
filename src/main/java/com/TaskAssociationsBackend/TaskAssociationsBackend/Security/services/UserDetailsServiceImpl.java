@@ -1,8 +1,12 @@
 package com.TaskAssociationsBackend.TaskAssociationsBackend.Security.services;
 
+import java.util.Optional;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -24,5 +28,15 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 		User user = userRepository.findByUsername(username)
 				.orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
 		return UserDetailsImpl.build(user);
+	}
+	
+	public Long CurrentLoggedInUser() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String CurrentUser = authentication.getName();
+		Long CurrentUserId;
+		Optional<User> user = userRepository.findByUsername(CurrentUser);
+		CurrentUserId = user.get().getId();
+		
+		return CurrentUserId;
 	}
 }

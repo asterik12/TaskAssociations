@@ -55,7 +55,7 @@ public class AuthController {
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/login")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-		 Authentication authentication = authenticationManager.authenticate(
+		Authentication authentication = authenticationManager.authenticate(
 			        new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		String jwt = jwtUtils.generateJwtToken(authentication);
@@ -77,12 +77,12 @@ public class AuthController {
 		if(userRepository.existsByUsername(signupRequest.getUsername())) {
 			return ResponseEntity
 					.badRequest()
-					.body(new MessageResponse("Error: Username is already taken!"));
+					.body(new MessageResponse("Username is already exists"));
 		}
 		if(userRepository.existsByEmail(signupRequest.getEmail())) {
 			return ResponseEntity
 					.badRequest()
-					.body(new MessageResponse("Error: Email is already in use"));
+					.body(new MessageResponse("Email is already exists"));
 		}
 		
 		//Create new user
@@ -106,12 +106,12 @@ public class AuthController {
 						.orElseThrow(() -> new RuntimeException("Error: Role is not found"));
 					roles.add(adminRole);
 					break;
-					
-					case "mod": 
+				case "moderator": 
 					Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
 						.orElseThrow(() -> new RuntimeException("Error: Role is not found"));
 					roles.add(modRole);
 					break;
+					
 					default:
 						Role userRole = roleRepository.findByName(ERole.ROLE_USER)
 							.orElseThrow(() -> new RuntimeException("Error: Role is not found"));

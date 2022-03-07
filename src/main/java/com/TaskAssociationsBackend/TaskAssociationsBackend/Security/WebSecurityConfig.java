@@ -25,7 +25,7 @@ import com.TaskAssociationsBackend.TaskAssociationsBackend.Security.services.Use
     prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 
-	@Autowired
+	  @Autowired
 	  UserDetailsServiceImpl userDetailsService;
 
 	  @Autowired
@@ -58,7 +58,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	      .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
 	      .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 	      .authorizeRequests().antMatchers("/api/auth/**").permitAll()
-	      .antMatchers("/api/test/**").permitAll()
+	      .antMatchers("/api/testUser/**").permitAll()
+	      .antMatchers("/api/task/**").permitAll()
 	      .anyRequest().authenticated();
 
 	    http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);

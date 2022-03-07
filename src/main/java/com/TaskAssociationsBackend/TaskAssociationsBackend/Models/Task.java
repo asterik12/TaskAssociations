@@ -1,26 +1,25 @@
 package com.TaskAssociationsBackend.TaskAssociationsBackend.Models;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class Task {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+	
 	private long userId;
 	private String taskName;
 	private String taskDescription;
-	public Task(long id, long userId, String taskName, String taskDescription) {
-		super();
-		this.id = id;
-		this.userId = userId;
+	public Task(String taskName, String taskDescription) {
 		this.taskName = taskName;
 		this.taskDescription = taskDescription;
 	}
 	public Task() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
 	public long getId() {
 		return id;
