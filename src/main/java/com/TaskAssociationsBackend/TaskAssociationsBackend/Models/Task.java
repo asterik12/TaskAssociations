@@ -1,9 +1,21 @@
 package com.TaskAssociationsBackend.TaskAssociationsBackend.Models;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 public class Task {
@@ -13,8 +25,28 @@ public class Task {
 	private long id;
 	
 	private long userId;
+	
 	private String taskName;
+	
 	private String taskDescription;
+	
+	private String sharedWith;
+	
+	private String status;
+	
+	
+	@CreationTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "create_date")
+	private Date createDate;
+	
+	@UpdateTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "updated_date")
+	private Date updatedDate;
+	
+	
+
 	public Task(String taskName, String taskDescription) {
 		this.taskName = taskName;
 		this.taskDescription = taskDescription;
@@ -45,10 +77,36 @@ public class Task {
 	public void setTaskDescription(String taskDescription) {
 		this.taskDescription = taskDescription;
 	}
+	public String getSharedWith() {
+		return sharedWith;
+	}
+	public void setSharedWith(String sharedWith) {
+		this.sharedWith = sharedWith;
+	}
+	public Date getCreateDate() {
+		return createDate;
+	}
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+	public Date getUpdatedDate() {
+		return updatedDate;
+	}
+	public void setUpdatedDate(Date updatedDate) {
+		this.updatedDate = updatedDate;
+	}
+	
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	@Override
 	public String toString() {
 		return "Task [id=" + id + ", userId=" + userId + ", taskName=" + taskName + ", taskDescription="
-				+ taskDescription + "]";
+				+ taskDescription + ", sharedWith=" + sharedWith + ", status=" + status + ", createDate=" + createDate
+				+ ", updatedDate=" + updatedDate + "]";
 	}
 	
 	
