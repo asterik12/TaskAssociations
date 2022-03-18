@@ -1,5 +1,6 @@
 package com.TaskAssociationsBackend.TaskAssociationsBackend.Models;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,6 +17,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class Task {
@@ -37,11 +40,13 @@ public class Task {
 	
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern =  "yyy-MM-dd HH:mm:ss", timezone = "IST")
 	@Column(name = "create_date")
 	private Date createDate;
 	
 	@UpdateTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern =  "yyy-MM-dd HH:mm:ss", timezone = "IST")
 	@Column(name = "updated_date")
 	private Date updatedDate;
 	
@@ -83,6 +88,8 @@ public class Task {
 	public void setSharedWith(String sharedWith) {
 		this.sharedWith = sharedWith;
 	}
+	
+	
 	public Date getCreateDate() {
 		return createDate;
 	}
@@ -95,7 +102,6 @@ public class Task {
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
-	
 	public String getStatus() {
 		return status;
 	}

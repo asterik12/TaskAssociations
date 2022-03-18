@@ -1,13 +1,24 @@
 package com.TaskAssociationsBackend.TaskAssociationsBackend.Models;
 
+import java.util.Date;
+import java.time.LocalDateTime;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.CreationTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @Entity
-@Table(name = "commment")
+@Table(name = "comment")
 public class Comment {
 
 	@Id
@@ -18,11 +29,16 @@ public class Comment {
 	
 	private long userId;
 	private long taskId;
+	
+	@CreationTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern =  "yyy-MM-dd HH:mm:ss", timezone = "IST")
+	@Column(name = "create_date")
+	private Date createDate;
+	
 	public Comment() {
 		
 	}
-
-	
 
 	public Comment(String text, long userId, long taskId) {
 		super();
@@ -64,5 +80,16 @@ public class Comment {
 	public void setTaskId(long taskId) {
 		this.taskId = taskId;
 	}
+
+
+
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+	
 	
 }

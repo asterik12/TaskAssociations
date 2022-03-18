@@ -75,9 +75,9 @@ public class TaskController {
 	}
 	
 	// get Task by ID API
-	@RequestMapping(method = RequestMethod.GET, value = "/view/task/{id}")
-	public Task viewTask(@PathVariable Long id) {
-		return this.taskService.viewTask(id);
+	@RequestMapping(method = RequestMethod.GET, value = "/read/{taskid}")
+	public Task viewTask(@PathVariable Long taskid) {
+		return this.taskService.viewTask(taskid);
 	}
 	
 	// Add Comment
@@ -93,10 +93,17 @@ public class TaskController {
 	}	
 	
 	// Show Comments
-	@RequestMapping(method = RequestMethod.GET, value = "/view/task/AllCommentsData")
+	@RequestMapping(method = RequestMethod.GET, value = "/AllCommentData")
 	public List<Comment> showComments() {
 		return this.taskService.showComments();
 	}
+	//show comment user
+	@RequestMapping(method = RequestMethod.GET, value = "/AllCommentUserData")
+	public Set<User> CommentUserData() {
+		return taskService.CommentUserData();
+	}
+	
+	
 	// Add Like
 	@RequestMapping(method = RequestMethod.PUT, value = "/edit/{id}/like")
 	public void addLike(@PathVariable Long id, @RequestBody Like like) {
@@ -145,5 +152,28 @@ public class TaskController {
 		return taskService.likesUserData();
 	}
 	
+	@RequestMapping(method = RequestMethod.GET, value = "/AllUserTaskData")
+	public List<Task> UserTaskData() {
+		return taskService.getUserTask();
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/AllAdminTaskData")
+	public List<Task> AdminTaskData() {
+		return taskService.getAdminTask();
+	}
+	@RequestMapping(method = RequestMethod.GET, value = "/AllModeratorTaskData")
+	public List<Task> ModeratorTaskData() {
+		return taskService.getModeratorTask();
+	}
+	//restricted Task
+	@RequestMapping(method = RequestMethod.GET, value = "/restricted")
+	public String RestrictedTaskData() {
+		return "restricted";
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/AllCommonTaskData")
+	public List<Task> getALLSharedTask() {
+		return taskService.getALLSharedTask();
+	}
 	
 }

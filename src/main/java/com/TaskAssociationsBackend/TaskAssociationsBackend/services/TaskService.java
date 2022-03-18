@@ -94,6 +94,24 @@ public class TaskService {
 		return moderatorTask.stream().distinct().collect(Collectors.toList());
 		
 	}
+	public List<Task> getALLSharedTask() {
+		List<Task> all = new ArrayList<>(Arrays.asList());
+		for(Task task : taskRepository.findAll() ) {
+			if(task.getSharedWith().equals("all")) {
+				if(all.contains(task)) {
+					continue;
+				}
+				else {
+					all.add(task);
+				}
+				
+			}
+		}
+		return all.stream().distinct().collect(Collectors.toList());
+		
+	}
+	
+	
 	
 	public Task getSingleTask(Long id) {
 		Task task = null;
@@ -150,6 +168,21 @@ public class TaskService {
 			commentData.add(c);
 		}
 		return commentData;
+	}
+	
+	public Set<User> CommentUserData() {
+		Set<User> commentUserData = new HashSet<>();
+		
+		for(Comment comment : commentRepository.findAll() ) {
+			for(User user: userRepository.findAll()) {
+				if(comment.getUserId() == user.getId()) {
+					commentUserData.add(user);
+					break;
+				}
+			}
+		}
+		return commentUserData;
+		
 	}
 	
 	// Likes task Actions
@@ -272,4 +305,5 @@ public class TaskService {
 		return followData;
 	
 	}
+	
 }
